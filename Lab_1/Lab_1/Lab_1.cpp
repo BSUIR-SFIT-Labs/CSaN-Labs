@@ -131,89 +131,96 @@ void PrintAllActiveMacAddresses(void)
 
 void DisplayStruct(int i, LPNETRESOURCE lpnrLocal)
 {
-	cout << "NETRESOURCE[" << i << "] Scope: ";
-	switch (lpnrLocal->dwScope) {
-	case (RESOURCE_CONNECTED):
-		cout << "connected" << endl;
-		break;
-	case (RESOURCE_GLOBALNET):
-		cout << "all resources" << endl;
-		break;
-	case (RESOURCE_REMEMBERED):
-		cout << "remembered" << endl;
-		break;
-	default:
-		cout << "unknown scope " << lpnrLocal->dwScope << endl;
-		break;
+	printf("NETRESOURCE[%d] Scope: ", i);
+	switch (lpnrLocal->dwScope) 
+	{
+		case (RESOURCE_CONNECTED):
+			printf("connected\n");
+			break;
+		case (RESOURCE_GLOBALNET):
+			printf("all resources\n");
+			break;
+		case (RESOURCE_REMEMBERED):
+			printf("remembered\n");
+			break;
+		default:
+			printf("unknown scope %d\n", lpnrLocal->dwScope);
+			break;
 	}
 
-	cout << "NETRESOURCE[" << i << "] Type: ";
-	switch (lpnrLocal->dwType) {
-	case (RESOURCETYPE_ANY):
-		cout << "any" << endl;
-		break;
-	case (RESOURCETYPE_DISK):
-		cout << "disk" << endl;
-		break;
-	case (RESOURCETYPE_PRINT):
-		cout << "print" << endl;
-		break;
-	default:
-		cout << "unknown type " << lpnrLocal->dwType << endl;
-		break;
+	printf("NETRESOURCE[%d] Type: ", i);
+	switch (lpnrLocal->dwType) 
+	{
+		case (RESOURCETYPE_ANY):
+			printf("any\n");
+			break;
+		case (RESOURCETYPE_DISK):
+			printf("disk\n");
+			break;
+		case (RESOURCETYPE_PRINT):
+			printf("print\n");
+			break;
+		default:
+			printf("unknown type %d\n", lpnrLocal->dwType);
+			break;
 	}
 
-	cout << "NETRESOURCE[" << i << "] DisplayType: ";
-	switch (lpnrLocal->dwDisplayType) {
-	case (RESOURCEDISPLAYTYPE_GENERIC):
-		cout << "generic\n";
-		break;
-	case (RESOURCEDISPLAYTYPE_DOMAIN):
-		cout << "domain" << endl;
-		break;
-	case (RESOURCEDISPLAYTYPE_SERVER):
-		cout << "server" << endl;
-		break;
-	case (RESOURCEDISPLAYTYPE_SHARE):
-		cout << "share" << endl;
-		break;
-	case (RESOURCEDISPLAYTYPE_FILE):
-		cout << "file" << endl;
-		break;
-	case (RESOURCEDISPLAYTYPE_GROUP):
-		cout << "group" << endl;
-		break;
-	case (RESOURCEDISPLAYTYPE_NETWORK):
-		cout << "network" << endl;
-		break;
-	default:
-		cout << "unknown display type " << lpnrLocal->dwDisplayType << endl;
-		break;
+	printf("NETRESOURCE[%d] DisplayType: ", i);
+	switch (lpnrLocal->dwDisplayType) 
+	{
+		case (RESOURCEDISPLAYTYPE_GENERIC):
+			printf("generic\n");
+			break;
+		case (RESOURCEDISPLAYTYPE_DOMAIN):
+			printf("domain\n");
+			break;
+		case (RESOURCEDISPLAYTYPE_SERVER):
+			printf("server\n");
+			break;
+		case (RESOURCEDISPLAYTYPE_SHARE):
+			printf("share\n");
+			break;
+		case (RESOURCEDISPLAYTYPE_FILE):
+			printf("file\n");
+			break;
+		case (RESOURCEDISPLAYTYPE_GROUP):
+			printf("group\n");
+			break;
+		case (RESOURCEDISPLAYTYPE_NETWORK):
+			printf("network\n");
+			break;
+		default:
+			printf("unknown display type %d\n", lpnrLocal->dwDisplayType);
+			break;
 	}
 
-	cout << "NETRESOURCE[" << i << "] Usage: " << lpnrLocal->dwUsage << " = ";
+	printf("NETRESOURCE[%d] Usage: 0x%x = ", i, lpnrLocal->dwUsage);
 	if (lpnrLocal->dwUsage & RESOURCEUSAGE_CONNECTABLE)
-		cout << "connectable";
-	if (lpnrLocal->dwUsage & RESOURCEUSAGE_CONTAINER)
-		cout << "container";
-	cout << endl;
+	{
+		printf("connectable ");
+	}
+	if (lpnrLocal->dwUsage & RESOURCEUSAGE_CONTAINER) 
+	{
+		printf("container ");
+	}
+	printf("\n");
 
-	cout << "NETRESOURCE[" << i << "] Localname: " << lpnrLocal->lpLocalName << endl;
-	cout << "NETRESOURCE[" << i << "] Remotename: " << lpnrLocal->lpRemoteName << endl;
-	cout << "NETRESOURCE[" << i << "] Comment: " << lpnrLocal->lpComment << endl;
-	cout << "NETRESOURCE[" << i << "] Provider: " << lpnrLocal->lpProvider << endl;
-	cout << endl;
+	printf("NETRESOURCE[%d] Localname: %S\n", i, lpnrLocal->lpLocalName);
+	printf("NETRESOURCE[%d] Remotename: %S\n", i, lpnrLocal->lpRemoteName);
+	printf("NETRESOURCE[%d] Comment: %S\n", i, lpnrLocal->lpComment);
+	printf("NETRESOURCE[%d] Provider: %S\n", i, lpnrLocal->lpProvider);
+	printf("\n");
 }
 
 BOOL WINAPI EnumerateFunc(LPNETRESOURCE lpnr)
 {
 	DWORD dwResult, dwResultEnum;
 	HANDLE hEnum;
-	DWORD cbBuffer = 16384;
-	DWORD cEntries = -1;      
-	LPNETRESOURCE lpnrLocal;
+	DWORD cbBuffer = 16384;  
+	DWORD cEntries = -1;       
+	LPNETRESOURCE lpnrLocal;    
 	DWORD i;
-   
+
 	// Call the WNetOpenEnum function to begin the enumeration.
 	dwResult = WNetOpenEnum(RESOURCE_GLOBALNET, // all network resources
 		RESOURCETYPE_ANY,                       // all resources
@@ -223,15 +230,16 @@ BOOL WINAPI EnumerateFunc(LPNETRESOURCE lpnr)
 
 	if (dwResult != NO_ERROR) 
 	{
-		cout << "WnetOpenEnum failed with error " << dwResult << endl;
+		printf("WnetOpenEnum failed with error %d\n", dwResult);
 		return FALSE;
 	}
-
+	
 	// Call the GlobalAlloc function to allocate resources.
 	lpnrLocal = (LPNETRESOURCE)GlobalAlloc(GPTR, cbBuffer);
 	if (lpnrLocal == NULL) 
 	{
-		cout << "WnetOpenEnum failed with error " << dwResult << endl;
+		printf("WnetOpenEnum failed with error %d\n", dwResult);
+
 		return FALSE;
 	}
 
@@ -239,7 +247,7 @@ BOOL WINAPI EnumerateFunc(LPNETRESOURCE lpnr)
 	{
 		// Initialize the buffer.
 		ZeroMemory(lpnrLocal, cbBuffer);
-
+		
 		// Call the WNetEnumResource function to continue
 		// the enumeration.
 		dwResultEnum = WNetEnumResource(hEnum,  // resource handle
@@ -247,44 +255,48 @@ BOOL WINAPI EnumerateFunc(LPNETRESOURCE lpnr)
 			lpnrLocal,                          // LPNETRESOURCE
 			&cbBuffer);                         // buffer size
 
-		// If the call succeeds, loop through the structures.
+        // If the call succeeds, loop through the structures.
 		if (dwResultEnum == NO_ERROR) 
 		{
 			for (i = 0; i < cEntries; i++) 
 			{
-
 				// Call an application-defined function to
 				// display the contents of the NETRESOURCE structures.
 				DisplayStruct(i, &lpnrLocal[i]);
 
 				// If the NETRESOURCE structure represents a container resource, 
 				// call the EnumerateFunc function recursively.
+
 				if (RESOURCEUSAGE_CONTAINER == (lpnrLocal[i].dwUsage
 					& RESOURCEUSAGE_CONTAINER))
+				{
 					if (!EnumerateFunc(&lpnrLocal[i]))
-						cout << "EnumerateFunc returned FALSE" << endl << endl;
+					{
+						printf("EnumerateFunc returned FALSE\n");
+					}
+				}
 			}
 		}
 
 		// Process errors.
 		else if (dwResultEnum != ERROR_NO_MORE_ITEMS) 
 		{
-			cout << "WNetEnumResource failed with error " << dwResultEnum << endl;
+			printf("WNetEnumResource failed with error %d\n", dwResultEnum);
 			break;
 		}
 	} while (dwResultEnum != ERROR_NO_MORE_ITEMS);
-
+	
 	// Call the GlobalFree function to free the memory.
 	GlobalFree((HGLOBAL)lpnrLocal);
-
+	
 	// Call WNetCloseEnum to end the enumeration.
 	dwResult = WNetCloseEnum(hEnum);
 
-	if (dwResult != NO_ERROR) {
-	
+	if (dwResult != NO_ERROR)
+	{
 		// Process errors.
-		cout << "WNetCloseEnum failed with error " << dwResult << endl;
-
+		printf("WNetCloseEnum failed with error %d\n", dwResult);
+		
 		return FALSE;
 	}
 
