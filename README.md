@@ -30,4 +30,3 @@ These programs allow to send or receive files over the network using the TCP pro
 [2]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/Lab_1/Lab_1.cpp
 [3]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/lab-2/Lab_2/README.md
 [4]: https://github.com/MrKonstantinSh/CSAN-Labs/tree/lab-2/Lab_2
-
