@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileSenderLib.TFile;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -6,31 +7,44 @@ using System.Threading;
 
 namespace FileSenderLib.Listener
 {
+    /// <summary>
+    /// Allows to receive files over the network using TCP.
+    /// </summary>
     public class TcpListener
     {
-        //Remove
-        private const int Offset = 0;
-
         private const int MaxConnections = 100;
 
         private readonly ManualResetEvent _allDone;
 
+        private readonly string _saveFolderPath;
+        private TransmittedFile _transmittedFile;
+
         private Socket _listener;
 
-        public TcpListener()
+        /// <summary>
+        /// Initializes class properties.
+        /// </summary>
+        public TcpListener(string saveFolderPath)
         {
             _allDone = new ManualResetEvent(false);
+            _saveFolderPath = saveFolderPath;
         }
 
+        /// <summary>
+        /// Starts listening on a port on a specific IP address.
+        /// </summary>
+        /// <param name="ipString">IP address.</param>
+        /// <param name="port">Port.</param>
         public void Start(string ipString, int port)
         {
-            var ipAddress = IPAddress.Parse(ipString);
-            var endpoint = new IPEndPoint(ipAddress, port);
-
-            _listener = new Socket(ipAddress.AddressFamily,
-                SocketType.Stream, ProtocolType.Tcp);
             try
             {
+                var ipAddress = IPAddress.Parse(ipString);
+                var endpoint = new IPEndPoint(ipAddress, port);
+
+                _listener = new Socket(ipAddress.AddressFamily,
+                    SocketType.Stream, ProtocolType.Tcp);
+            
                 _listener.Bind(endpoint);
                 _listener.Listen(MaxConnections);
 
@@ -38,20 +52,22 @@ namespace FileSenderLib.Listener
                 {
                     _allDone.Reset();
 
-                    // Notify SERVER START
-
                     _listener.BeginAccept(new AsyncCallback(AcceptConnection),
                         _listener);
 
                     _allDone.WaitOne();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
+                throw;
             }
         }
 
+        /// <summary>
+        /// Accepts connections. Starts receiving a file.
+        /// </summary>
+        /// <param name="asyncResult">The result of the asynchronous operation.</param>
         private void AcceptConnection(IAsyncResult asyncResult)
         {
             _allDone.Set();
@@ -63,12 +79,18 @@ namespace FileSenderLib.Listener
             {
                 WorkSocket = handler
             };
-            handler.BeginReceive(listenerState.Buffer, Offset,
+
+            const int bufferOffset = 0;
+            handler.BeginReceive(listenerState.Buffer, bufferOffset,
                 ListenerState.BufferSize, SocketFlags.None,
-                new AsyncCallback(EndRecive), listenerState);
+                new AsyncCallback(EndReceive), listenerState);
         }
 
-        private void EndRecive(IAsyncResult asyncResult)
+        /// <summary>
+        /// Finishes receiving a file over the network.
+        /// </summary>
+        /// <param name="asyncResult">The result of the asynchronous operation.</param>
+        private void EndReceive(IAsyncResult asyncResult)
         {
             var listenerState = (ListenerState)asyncResult.AsyncState;
             var handler = listenerState.WorkSocket;
@@ -77,29 +99,74 @@ namespace FileSenderLib.Listener
 
             if (bytesRead > 0)
             {
-                Console.WriteLine("Yes!");
-                var transmittedFile = new TransmittedFile(listenerState.Buffer);
-                transmittedFile.Create(@"C:\Users\mrkon\Downloads\");
-                /*if (listenerState.IsFirstRecive)
+                if (listenerState.IsFirstBlockReceived)
+                {   
+                    _transmittedFile = ReceiveFileDetails(listenerState);
+
+                    Array.Clear(listenerState.Buffer, 0, listenerState.Buffer.Length);
+                    listenerState.IsFirstBlockReceived = false;
+                }
+                else
                 {
-                    // Rename
-                    byte[] needToRecive = listenerState.Buffer.Take(8).ToArray();
+                    int numberOfBytesToWrite = ((listenerState.NeedToReceivedBytes - listenerState.ByteReceived)
+                        / ListenerState.BufferSize > 0) ? ListenerState.BufferSize
+                        : (int)(listenerState.NeedToReceivedBytes - listenerState.ByteReceived);
 
-                    listenerState.NeedToRecive = BitConverter.ToInt32(needToRecive,
-                        needToRecive.Length);
+                    const int bufferOffset = 0;
+                    _transmittedFile.WriteBytes(_saveFolderPath, listenerState.Buffer,
+                        bufferOffset, numberOfBytesToWrite);
 
-                    listenerState.IsFirstRecive = false;
-                }*/
+                    const int startIndex = 0;
+                    Array.Clear(listenerState.Buffer, startIndex, listenerState.Buffer.Length);
+                    listenerState.ByteReceived += numberOfBytesToWrite;
+                }
+                
+                if (listenerState.NeedToReceivedBytes != listenerState.ByteReceived)
+                {
+                    const int bufferOffset = 0;
+                    handler.BeginReceive(listenerState.Buffer, bufferOffset,
+                        ListenerState.BufferSize, SocketFlags.None,
+                        new AsyncCallback(EndReceive), listenerState);
+                }
             }
-
-            handler.Shutdown(SocketShutdown.Both);
-            handler.Close();
         }
 
+        /// <summary>
+        /// Receives file details.
+        /// </summary>
+        /// <param name="listenerState">TCP listener status.</param>
+        /// <returns>Transmitted file, with installed file details.</returns>
+        private TransmittedFile ReceiveFileDetails(ListenerState listenerState)
+        {
+            const int reservedСellSize = 8;
+            const int startIndex = 0;
+
+            long fileDetailsLength = BitConverter.ToInt64(listenerState.Buffer
+                .Take(reservedСellSize).ToArray(), startIndex);
+
+            byte[] fileDetails = listenerState.Buffer
+                .Skip(reservedСellSize).Take((int)fileDetailsLength).ToArray();
+
+            listenerState.NeedToReceivedBytes = BitConverter.ToInt64(listenerState.Buffer
+                .Skip(reservedСellSize + fileDetails.Length).ToArray(), startIndex);
+
+            return new TransmittedFile(fileDetails);
+        }
+
+        /// <summary>
+        /// Stops listening on a port on a specific IP address.
+        /// </summary>
         public void Stop()
         {
-            _listener.Shutdown(SocketShutdown.Both);
-            _listener.Close();
+            try
+            {
+                _listener.Shutdown(SocketShutdown.Both);
+                _listener.Close();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
