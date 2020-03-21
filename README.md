@@ -5,9 +5,12 @@
 
 #### 1. Print active MAC-addresses. Display all work groups, computers on the network, and their resources (Lab 1)
 ***Description:***
-This program displays the active MAC-address(es) of the computer and displays all work groups, computers on the network and their resources (folders open for public access, printers).</br>
-***Programming language:*** С++</br>
-***Program documentation:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/README.md][1]</br>
+This program displays the active MAC-address(es) of the computer and displays all work groups, computers on the network and their resources (folders open for public access, printers).
+
+***Programming language:*** С++
+
+***Program documentation:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/README.md][1]
+
 ***Source code:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/Lab_1/Lab_1.cpp][2]
 
 [1]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/README.md
