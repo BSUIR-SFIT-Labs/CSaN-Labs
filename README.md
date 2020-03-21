@@ -13,6 +13,8 @@ This program displays the active MAC-address(es) of the computer and displays al
 
 ***Source code:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/Lab_1/Lab_1.cpp][2]
 
+---
+
 #### 2. A program for sending/receiving files over a network using the TCP protocol (Lab 2)
 
 ***Description:***
