@@ -5,18 +5,43 @@ namespace Sender
 {
     class Sender
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            Console.WriteLine("Enter path to file: ");
-            string pathToFile = Console.ReadLine();
+            Console.Write("Enter the IP address: ");
+            string ipAddress = Console.ReadLine();
 
-            var tcpSender = new TcpSender();
-            tcpSender.Start("127.0.0.1", 13);
-            tcpSender.SendFile(pathToFile);
-            tcpSender.Stop();
+            Console.Write("Enter port: ");
+            int port;
+            try
+            {
+                port = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: need to enter a number!");
+                return 1;
+            }
 
-            Console.WriteLine("END!");
+            try
+            {
+                var tcpSender = new TcpSender();
+                tcpSender.Start(ipAddress, port);
+
+                Console.Write("Enter path to file: ");
+                string pathToFile = Console.ReadLine();
+
+                tcpSender.SendFile(pathToFile);
+
+                tcpSender.Stop();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            Console.WriteLine("Stop!");
             Console.ReadLine();
+            return 0;
         }
     }
 }
