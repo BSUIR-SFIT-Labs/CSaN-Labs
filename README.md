@@ -22,11 +22,12 @@ These programs allow to send or receive files over the network using the TCP pro
 
 ***Programming language:*** С#
 
-***Program documentation:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/lab-2/Lab_2/README.md][3]
+***Program documentation:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_2/README.md][3]
 
-***Source code:*** [https://github.com/MrKonstantinSh/CSAN-Labs/tree/lab-2/Lab_2][4]
+***Source code:*** [https://github.com/MrKonstantinSh/CSAN-Labs/tree/master/Lab_2][4]
 
 [1]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/README.md
 [2]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/Lab_1/Lab_1.cpp
-[3]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/lab-2/Lab_2/README.md
-[4]: https://github.com/MrKonstantinSh/CSAN-Labs/tree/lab-2/Lab_2
+[3]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_2/README.md
+[4]: https://github.com/MrKonstantinSh/CSAN-Labs/tree/master/Lab_2
+
