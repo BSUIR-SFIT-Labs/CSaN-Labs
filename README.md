@@ -1,9 +1,10 @@
-﻿## Computer systems and networks (Labs)
+﻿# Computer systems and networks (Labs)
 
-***`Description:`***
-`This repository contains source code and a description of the programs created as part of the course "Computer Systems and Networks".`
+***Description:***
+`
+Labs on the subject of computer systems and networks.`
 
-#### 1. Print active MAC-addresses. Display all work groups, computers on the network, and their resources (Lab 1)
+### 1. Print active MAC-addresses. Display all work groups, computers on the network, and their resources (Lab 1)
 ***Description:***
 This program displays the active MAC-address(es) of the computer and displays all work groups, computers on the network and their resources (folders open for public access, printers).
 
@@ -15,7 +16,7 @@ This program displays the active MAC-address(es) of the computer and displays al
 
 ---
 
-#### 2. A program for sending/receiving files over a network using the TCP protocol (Lab 2)
+### 2. A program for sending/receiving files over a network using the TCP protocol (Lab 2)
 
 ***Description:***
 These programs allow to send or receive files over the network using the TCP protocol.
