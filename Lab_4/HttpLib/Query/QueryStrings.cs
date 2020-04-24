@@ -1,5 +1,8 @@
 ﻿namespace HttpLib.Query
 {
+    /// <summary>
+    /// Contains the component lines of the request to the server.
+    /// </summary>
     class QueryStrings
     {
         public const string NewLine = "\n";
