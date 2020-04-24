@@ -3,10 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HttpClientApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="HttpClient" Height="650" Width="400" MinWidth="350" MinHeight="500"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Resources/Icon.ico">
     <Grid>
-
+        <Label Content="Host:" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Name="LblHost"/>
+        <TextBox Margin="10,23,10,0" Text="" TextWrapping="Wrap" Height="18" VerticalAlignment="Top" Name="TbHost"/>
+        <Label Content="Path:" HorizontalAlignment="Left" Margin="5,44,0,0" VerticalAlignment="Top" Name="LblPath"/>
+        <TextBox Margin="10,67,10,0" Text="" TextWrapping="Wrap" Height="18" VerticalAlignment="Top" Name="TbPath"/>
+        <Label Content="Request types:" HorizontalAlignment="Left" Margin="5,87,0,0" VerticalAlignment="Top" Name="LblRequestType"/>
+        <ComboBox Margin="10,112,10,0" VerticalAlignment="Top" Cursor="Hand" Name="CbRequestType" >
+            <ComboBoxItem Content="GET" IsSelected="True" Name="CbiGet" Selected="Cbi_Selected"/>
+            <ComboBoxItem Content="HEAD" Name="CbiHead" Selected="Cbi_Selected"/>
+            <ComboBoxItem Content="POST" Name="CbiPost" Selected="CbiPost_Selected"/>
+        </ComboBox>
+        <Label Content="Request body:" HorizontalAlignment="Left" Margin="5,136,0,0" VerticalAlignment="Top" Name="LblRequestBody"/>
+        <RichTextBox Margin="10,159,10,0" Height="70" VerticalAlignment="Top" IsReadOnly="True" Name="RtbRequestBody">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text=""/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Content="Send request" Margin="10,235,10,0" Height="20" VerticalAlignment="Top" Cursor="Hand" Name="BtnSendRequest" Click="BtnSendRequest_Click"/>
+        <Label Content="Log:" HorizontalAlignment="Left" Margin="5,255,0,0" VerticalAlignment="Top" Name="LblLog"/>
+        <RichTextBox Margin="10,279,10,35" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Block.LineHeight="1" Name="RtbLog">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text=""/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Content="Clear" Margin="0,0,10,10" HorizontalAlignment="Right" Width="100" Height="20" VerticalAlignment="Bottom" Cursor="Hand" Name="BtnClearLog" Click="BtnClearLog_Click"/>
     </Grid>
 </Window>
