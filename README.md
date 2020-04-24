@@ -10,25 +10,30 @@ This program displays the active MAC-address(es) of the computer and displays al
 
 ***Programming language:*** С++
 
-***Program documentation:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/README.md][1]
+***Program documentation:*** https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/README.md
 
-***Source code:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/Lab_1/Lab_1.cpp][2]
+***Source code:*** https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/Lab_1/Lab_1.cpp
 
 ---
 
 ### 2. A program for sending/receiving files over a network using the TCP protocol (Lab 2)
-
 ***Description:***
 These programs allow to send or receive files over the network using the TCP protocol.
 
 ***Programming language:*** С#
 
-***Program documentation:*** [https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_2/README.md][3]
+***Program documentation:*** https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_2/README.md
 
-***Source code:*** [https://github.com/MrKonstantinSh/CSAN-Labs/tree/master/Lab_2][4]
+***Source code:*** https://github.com/MrKonstantinSh/CSAN-Labs/tree/master/Lab_2
 
-[1]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/README.md
-[2]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_1/Lab_1/Lab_1.cpp
-[3]: https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_2/README.md
-[4]: https://github.com/MrKonstantinSh/CSAN-Labs/tree/master/Lab_2
+---
 
+### 4. A program that implements the functions of the HTTP client v1.0
+***Description:***
+This program implements the basic functions of the HTTP client version 1.0.
+
+***Programming language:*** С#
+
+***Program documentation:*** https://github.com/MrKonstantinSh/CSAN-Labs/blob/master/Lab_4/README.md
+
+***Source code:*** https://github.com/MrKonstantinSh/CSAN-Labs/tree/master/Lab_4
