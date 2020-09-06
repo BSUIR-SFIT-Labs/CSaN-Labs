@@ -1,14 +1,10 @@
-# Program for displaying active MAC-addresses and work groups with resources
+# Программа, отображающая MAC-адреса и рабочии группы с их ресурсами
 
-### Detailed description:
-This program displays the active MAC-address(es) of the computer and displays all work groups, computers on the network and their resources (folders open for public access, printers).
+### Задание
+Написать программу, реализующую следующие функции (**использовать только функции** [WinApi](https://docs.microsoft.com/en-us/windows/win32/apiindex/windows-api-list)):
+1. Отображение [MAC-адреса](https://en.wikipedia.org/wiki/MAC_address) компьютера (можно воспользоваться функцией [netbios](https://docs.microsoft.com/en-us/windows/win32/api/_netbios/)).
+2. Отображение всех `рабочих групп`, `компьютеров в сети` и их `ресурсов` (папок, открытых для общего доступа, принтеров). Воспользоваться функциями [WNet](https://docs.microsoft.com/en-us/windows/win32/wnet/wnet-functions).
 
-### Important points:
-Getting MAC-addresses is implemented using ***`netbios`*** functionality.
-
-Obtaining work groups, computers on the network and their resources is implemented using ***`WNet`*** functions.
-
-### Documentation:
-`Netbios documentation:` https://docs.microsoft.com/en-us/windows/win32/api/_netbios/
-
-`WNet documentation:` https://docs.microsoft.com/en-us/windows/win32/wnet/enumerating-network-resources
+### Важные моменты
+ - Получение [MAC-адресов](https://en.wikipedia.org/wiki/MAC_address) реализовано с помощью функций [netbios](https://docs.microsoft.com/en-us/windows/win32/api/_netbios/).
+ - Получение `рабочих групп`, `компьютеров в сети` и их `ресурсов` реализовано с помощью функций [WNet](https://docs.microsoft.com/en-us/windows/win32/wnet/wnet-functions).
